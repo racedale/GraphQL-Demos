@@ -1,5 +1,5 @@
-const { ApolloServer, gql } = require("apollo-server");
-import { fields } from "./manual-mocks";
+import { ApolloServer, gql } from "apollo-server";
+import { books } from "./manual-mocks";
 
 // A schema is a collection of type definitions (hence "typeDefs")
 // that together define the "shape" of queries that are executed against
@@ -7,15 +7,15 @@ import { fields } from "./manual-mocks";
 const typeDefs = gql`
   # Comments in GraphQL strings (such as this one) start with the hash (#) symbol.
 
-  "Logical representation of a Field with a name. Spatial attributes of the Field are provided in the Boundary"
-  type Field {
-    "Unique identifier for a Field"
+  "Logical representation of a Book with a name. Spatial attributes of the Book are provided in the Boundary"
+  type Book {
+    "Unique identifier for a Book"
     id: ID
-    "Name of the Field"
+    "Name of the Book"
     name: String
-    "Unique identifier of the resource owner that owns the Field"
+    "Unique identifier of the resource owner that owns the Book"
     resourceOwnerId: ID @deprecated(reason: "Use resourceOwner instead")
-    "The resource owner that owns the Field."
+    "The resource owner that owns the Book."
     resourceOwner: ResourceOwner
   }
 
@@ -27,10 +27,10 @@ const typeDefs = gql`
 
   # The "Query" type is special: it lists all of the available queries that
   # clients can execute, along with the return type for each. In this
-  # case, the "fields" query returns an array of zero or more Fields (defined above).
+  # case, the "books" query returns an array of zero or more Books (defined above).
   type Query {
-    fields: [Field]
-    fieldById(id: ID!): Field
+    books: [Book]
+    bookById(id: ID!): Book
     resourceOwner(id: ID!): ResourceOwner
   }
 `;
@@ -40,9 +40,9 @@ const typeDefs = gql`
 // https://www.apollographql.com/docs/apollo-server/data/resolvers/
 const resolvers = {
   Query: {
-    fields: () => fields,
-    fieldById: (parent, args, context, info) =>
-      fields.find((field) => field.id === args.id),
+    books: () => books,
+    bookById: (parent: any, args: any, context: any, info: any) =>
+      books.find((book) => book.id === args.id),
   },
 };
 

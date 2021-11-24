@@ -1,7 +1,7 @@
-export const fields = [
+export const books = [
   {
     id: "1",
-    name: "Field One",
+    name: "Book One",
     description: "english",
     resourceOwner: {
       name: "Dale",
@@ -10,7 +10,7 @@ export const fields = [
   },
   {
     id: "2",
-    name: "Field Two",
+    name: "Book Two",
     resourceOwner: {
       name: "Not Me",
       email: "someone.else@gmail.com",
